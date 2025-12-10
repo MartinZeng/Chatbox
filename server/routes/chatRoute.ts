@@ -6,11 +6,11 @@ import { UserController} from "../controller/UserController";
 
 const Route = express.Router();
 
-Route.post("/", UserController.createUser, (req: Request,res: Response,next: NextFunction) => { 
+Route.post("/messages", UserController.createUser, (req: Request,res: Response,next: NextFunction) => { 
     return res.status(200).json(res.locals.newUser)
 })
 
-Route.get("/", UserController.getAllUsers, (req: Request,res: Response,next: NextFunction) => { 
+Route.get("/messages", UserController.getAllUsers, (req: Request,res: Response,next: NextFunction) => { 
     return res.status(200).json(res.locals.newUser)
 })
 

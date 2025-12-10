@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import { DBconnection, DBdisconnect } from "./utils/database";
+import chatRoute from "./routes/chatRoute";
 
 dotenv.config();
 //setting up express app
@@ -29,6 +30,8 @@ app.get("/ping", (req, res) => {
   console.log("Hit the endpoint");
   res.status(200).send("Henlo");
 });
+
+app.use("/messages", chatRoute);
 
 app.use((req, res, next) => {
   res.status(404).json({err: "unknown route"})

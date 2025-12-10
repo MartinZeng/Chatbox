@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export type Message = {
+  _id?: string;
+  message: string;
+  username: string;
+  createdAt?: string;
 }
 
-export default App
+function formatTime(dateString: string | undefined) {
+  if (!dateString) return "";
+  const d = new Date(dateString);
+  return d.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+export default function MessageList({ messages }: { messages: Message[] }) {
+  return (
+    <div className="message-list">
+      {messages.map((msg, index) => (
+        <div key={msg._id || index} className="message-bubble">
+          <div className="message-header">
+            <span className="message-username">{msg.username}</span>
+            <span className="message-time">{formatTime(msg.createdAt)}</span>
+          </div>
+          <div className="message-text">{msg.message}</div>
+        </div>
+      ))}
+    </div>
+  );
+}

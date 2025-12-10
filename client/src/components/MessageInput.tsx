@@ -2,16 +2,25 @@
 
 interface Props{
     handleSend: () => void;
+    user: string;
     message: string;
     setMessage: (value: string) => void;
+    setUser: (value: string) => void;
 }
 
 
 
-export default function MessageInput({handleSend, message, setMessage}:Props) {
+export default function MessageInput({handleSend, message, setMessage, setUser, user}:Props) {
     return (
         <form onSubmit = {handleSend}>
         <div className="message-input">
+            <input
+            type="text"
+            className="user-input-field"
+            placeholder="Type your name..."
+            onChange = {(e) => {setUser(e.target.value)}}
+            value = {user}
+            />
             <input
             type="text"
             className="message-input-field"
