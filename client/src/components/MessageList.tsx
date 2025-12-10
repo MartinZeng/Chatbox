@@ -3,6 +3,8 @@ export type Message = {
   message: string;
   username: string;
   createdAt?: string;
+  messages: Message[];
+  text: string;
 }
 
 function formatTime(dateString: string | undefined) {
@@ -14,7 +16,13 @@ function formatTime(dateString: string | undefined) {
   });
 }
 
-export default function MessageList({ messages }: { messages: Message[] }) {
+
+const MessageList: React.FC<Message> = ({ messages }) => {
+
+  // /Loading state
+    if (messages.length === 0) {
+        return <div> Loading messages...</div>
+    }
   return (
     <div className="message-list">
       {messages.map((msg, index) => (
@@ -29,3 +37,5 @@ export default function MessageList({ messages }: { messages: Message[] }) {
     </div>
   );
 }
+
+export default MessageList

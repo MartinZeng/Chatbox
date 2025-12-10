@@ -29,6 +29,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
+  background: #111827;
 }
 
 /* Burbuja */
@@ -88,4 +89,16 @@
   color: white;
   font-weight: 500;
   cursor: pointer;
+}
+.message-bubble {
+
+
+  /* animation */
+  
+  animation: fadeIn .20s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0px); }
 }
