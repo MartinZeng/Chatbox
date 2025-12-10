@@ -5,10 +5,11 @@ import { Request, Response, NextFunction  } from "express";
 export const MessageController = { 
     createMessage: async(req:Request, res: Response, next: NextFunction) => { 
         try{
-            const { message } = req.body;
+            const { message, username } = req.body;
             const newMessage = await Message.create(
                 {
                  message,   
+                 username
                 }
             ) 
             res.locals.newMessage = newMessage; 
@@ -25,13 +26,12 @@ export const MessageController = {
 
     getAllMessages: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { message } = req.body; 
+            // const { message, username } = req.body; 
 
-            const existingMessage = Message.findOne({
-                message: message
-            }); 
+            const existingMessage = await Message.find(); 
 
-            res.locals.message = existingMessage;
+            res.locals.messages = existingMessage;
+            // res.locals.currUsername = username;
             return next()
         } catch (err) {
             return next({

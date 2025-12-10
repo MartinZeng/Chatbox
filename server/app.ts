@@ -31,6 +31,9 @@ app.get("/ping", (req, res) => {
   res.status(200).send("Henlo");
 });
 
+app.use("/", chatRoute);
+
+
 app.use("/messages", chatRoute);
 
 app.use((req, res, next) => {
