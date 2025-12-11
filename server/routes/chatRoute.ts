@@ -23,7 +23,4 @@ Route.post("/messages", MessageController.createMessage, (req: Request,res: Resp
 })
 
 
-// create get and post routes for messages as well -- MANNY 
-
-
 export default Route;

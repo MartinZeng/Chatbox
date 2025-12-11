@@ -30,12 +30,12 @@ export const MessageController = {
 
     getAllMessages: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            // const { message, username } = req.body; 
+        
 
             const existingMessage = await Message.find(); 
 
             res.locals.messages = existingMessage;
-            // res.locals.currUsername = username;
+        
             return next()
         } catch (err) {
             return next({

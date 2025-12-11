@@ -17,7 +17,8 @@ const io = new Server(httpServer, {
   cors: {
     origin: ["http://localhost:5173","http://0.0.0.0:5173"],
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true, 
+    allowedHeaders: ["*"]
   }
 })
 
@@ -28,16 +29,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 io.on("connection", (socket) => {
-  // console.log("✅ user connected: ", socket.id);
+  console.log("✅ user connected: ", socket.id);
 
-  // socket.on("disconnect", () => {
-  //   console.log("User disconnected", socket.id);
-  // })
-  // socket.on("sendMessage", (message) =>{
-  //   io.emit("message", message)
-  //   // here is one emit
-  // });
-
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id);
+  })
 })
 
 

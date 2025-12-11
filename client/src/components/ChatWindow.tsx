@@ -4,7 +4,6 @@ import MessageInput from "./MessageInput"
 import {useEffect, useState, useRef} from 'react'
 import { io, Socket } from "socket.io-client"
 
-const socket = io("http://localhost:3000")
 
 const ChatWindow: React.FC = () => {
     const [ messages , setMessages ] = useState<Message[]>([]);
@@ -12,15 +11,33 @@ const ChatWindow: React.FC = () => {
     const [ user, setUser] = useState<string> ("");
     const [error,setError] = useState <string | null> (null);
     const [loading, setLoading] = useState<boolean>(true);
-    // setting socket state
-    // const [socket, setSocket] = useState<Socket | null>(null);
-    // const listenSetup = useRef(false);
+    
+    const bottomRef = useRef<HTMLDivElement> (null);
+
+    useEffect(() => {
+        const savedUser = localStorage.getItem("chatUsername"); 
+        if (savedUser) {
+            setUser(savedUser)
+        }
+    },[]); 
+
+    useEffect(() => {
+        // if there is a user then save them, if not do not save 
+        if (user) {
+            localStorage.setItem("chatUsername", user)
+        }
+    },[user])
+
+
 
     // create initial socket connection with useEffect
     useEffect(() => {
-        
-        // if (listenSetup.current) return; 
-        // listenSetup.current = true;
+
+        const socket = io("http://localhost:3000", {
+            withCredentials: true, 
+            transports: ["websocket", "polling"]
+        })
+
 
         socket.on("connect", () => {
             console.log("Socket connected: ", socket.id)
@@ -84,13 +101,14 @@ const ChatWindow: React.FC = () => {
         // init fetch 
         fetchMessages();
 
-        // make it so it refetches every 2 secs through polling 
-        // const int = setInterval(()=>{fetchMessages()}, 3000); 
-
-        // return () => clearInterval(int);
-
 
     }, []);
+
+    //useEffect to auto-scroll to the bottom of the chat...
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
 
     const handleSend = async () => {
 
@@ -113,47 +131,20 @@ const ChatWindow: React.FC = () => {
         setError(err.error|| `Failed to create message`)
         return;
     }
-    
-    // const savedMessages = await res.json();
-    
-
-
-    // setMessages( (prev) => [...prev, savedMessages]);
-    // setMessage(savedMessage);
-    console.log(currMessage);
-    // setMessages((prev) => [...prev, savedMessage])
-    // setMessage([]);
     setCurrMessage('')
     } catch (err) {
         console.error("Error creating message:", err);
         setError("Something went wrong. Please try again.");
 
     }
-
-    
-
-    // //message template
-    // const newMessage = {
-    //     text: message,
-    //     username: user,
-    //     createdAt: new Date().toLocaleTimeString(),// new is a invocation alert to let you know that we are using date as a template
-    // }
     }
-
-
-    
-
-    //Loading state
-    // if (messages.length === 0) {
-    //     return <div> Loading messages...</div>
-    // }
-
 
     return (
     <div className= "chat-window">
         <MessageList
         messages={messages} 
         currentUser={user} 
+        bottomRef = {bottomRef}
         />
         <MessageInput 
             handleSend = {handleSend}
