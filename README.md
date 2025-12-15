@@ -1,5 +1,6 @@
 # Chatbox 
-
+- Please Ensure that that you Fork and clone this repo.
+- There is a Signup branch that is available so please fork more than the main.
 ## 📱  Messenger App 📱
 
 
@@ -86,7 +87,7 @@ This project was built on a full-stack Javascript evironment.Below is an overvie
 - Sign in and Sign up Features
 - Multiple Chatrooms
 - Dark and Light Mode
-- Allowing chat bubbles to align to the designated sender side ( User bubble to the right and incoming message tom the left)
+- Allowing chat bubbles to align to the designated sender side ( User bubble to the right and incoming message to the left)
 
 ## Allure for Iterating on this Project
 - A chat feature is a flexible application that can be used and embeded in many applications
