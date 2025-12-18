@@ -5,6 +5,8 @@ export type Message = {
   createdAt?: string;
 };
 
+import { describe, it, expect } from 'vitest';
+
 function formatTime(dateString: string | undefined) {
   if (!dateString) return '';
   const d = new Date(dateString);
@@ -13,6 +15,19 @@ function formatTime(dateString: string | undefined) {
     minute: '2-digit',
   });
 }
+
+describe('formatTime utility', () => {
+  it('returns empty string if date is undefined', () => {
+    expect(formatTime(undefined)).toBe('');
+  });
+
+  it('formats a date string correctly', () => {
+    const mockDate = '2023-10-27T10:30:00Z';
+    // This result depends on your local timezone, but check if it's a string
+    expect(typeof formatTime(mockDate)).toBe('string');
+    expect(formatTime(mockDate)).toMatch(/\d{2}:\d{2}/);
+  });
+});
 
 //cammbio/change(build message list)
 interface MessageListProps {
